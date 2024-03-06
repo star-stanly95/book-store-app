@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import loginReducer from './features/login/loginSlice'
+import {  persistStore } from 'redux-persist';
+import rootReducer from './statemanager/RootReducer'
 
 export const store = configureStore({
-    reducer: {
-        userlogin: loginReducer
-    }
+    reducer: rootReducer
 })
+
+export const persistor = persistStore(store)

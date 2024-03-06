@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authenticated, notAuthenticated } from './features/login/loginSlice';
 
 const Login = () => {
@@ -8,25 +8,25 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const revalue = useSelector((state) => state.userlogin.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.userlogin.isLoggedIn)
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/home');
+    }
+
+  })
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     // Check for empty strings instead of null or undefined
     if (username.trim() !== '' && password.trim() !== '') {
-      // Authentication logic (assuming it's synchronous)
       dispatch(authenticated(true));
 
-      // No need for .then() here, as dispatch is synchronous
+      navigate('/home');
 
-      if (revalue) {
-        navigate('/home');
-      } else {
-        alert('Authentication failed. Please check your credentials.');
-      }
     } else {
-      // Dispatch notAuthenticated action if the credentials are not valid
       dispatch(notAuthenticated(false));
       alert('Please provide valid credentials.');
     }

@@ -1,5 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const MenuItem = ({ item }) => (
   <li className="has-children">
@@ -18,19 +19,19 @@ const SubMenu = ({ items }) => (
 );
 
 const Menu = ({ items }) => {
-
+  const isLoggedIn = useSelector((state) => state.userlogin.isLoggedIn);
 
   return (
     <div>
-
-      <nav className="navbar">
-        <ul className='navbar-menu'>
-          {items.map((item) => (
-            <MenuItem key={item.id} item={item} />
-          ))}
-        </ul>
-      </nav>
-
+      {isLoggedIn &&
+        <nav className="navbar">
+          <ul className='navbar-menu'>
+            {items.map((item) => (
+              <MenuItem key={item.id} item={item} />
+            ))}
+          </ul>
+        </nav>
+      }
     </div>
 
   )
