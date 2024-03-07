@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticated, notAuthenticated } from './features/login/loginSlice';
+import { postEndPoint } from './services/bookApi';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -20,16 +22,29 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Check for empty strings instead of null or undefined
-    if (username.trim() !== '' && password.trim() !== '') {
-      dispatch(authenticated(true));
+    try {
 
-      navigate('/home');
+      if (username.trim() !== '' && password.trim() !== '') {
+        const reqBody = { userName: username.trim(), password: password.trim() }
+        
+        const result = await postEndPoint('/login', reqBody);
+        debugger
+        Cookies.set('jwtToken', result, { httpOnly: true })
+        console.log(await result)
+        dispatch(authenticated(true));
 
-    } else {
-      dispatch(notAuthenticated(false));
-      alert('Please provide valid credentials.');
+        navigate('/home');
+
+      } else {
+        dispatch(notAuthenticated(false));
+        alert('Please provide valid credentials.');
+      }
+
+    } catch (error) {
+      console.log(error)
     }
+
+
   };
 
   return (

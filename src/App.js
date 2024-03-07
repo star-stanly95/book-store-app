@@ -1,8 +1,8 @@
 
-import Menu from './Menu/Menu'
+import Menu from './menu/menu'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import MainRoutes from './Routes/Routes'
-import Login from './Login'
+import MainRoutes from './approutes/approutes'
+import Login from './login'
 
 
 const menuData = [
@@ -18,7 +18,7 @@ const menuData = [
             {
                 id: 21,
                 label: 'Create Book',
-                link: '/CreateBook',
+                link: '/createbook',
             },
             {
                 id: 22,

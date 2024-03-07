@@ -13,6 +13,7 @@ const persistedReducer = persistReducer(persistConfig, loginReducer)
 const rootReducer = combineReducers({
     userlogin: persistedReducer, //persistReducer(persistConfig, loginReducer)
     devTools: process.env.NODE_ENV !== 'production',
+    
 })
 
 export default rootReducer;
